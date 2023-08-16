@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TO DO APPLICATION - FLASK</title>
+</head>
+<body>
+        <h1 align="center">To Do App</h1>
+        <form action="/tasks" method="POST" enctype="multipart/form-data">
+            <div align="center" class="form-outline">
+                <table align="center" border="0">
+                    <tr>
+                        <td align="center">
+                            <label for="title">Enter a task here</label>
+                        </td>
+                        <td align="center">
+                            <input type="text" id="title" name="title" required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <label for="description">Enter a task description here</label>
+                        </td>
+                        <td align="center">
+                            <textarea id="description" name="description" required></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <label for="status">Enter a task status here</label>
+                        </td>
+                        <td align="center">
+                            <textarea id="status" name="status" required>To Do (By default)</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div align="center" class="form-outline">
+                  <button type="submit">ADD TASK</button>
+            </div>
+        </form>
+        <p align="center">{{ message }}</p>
+        <form action="/tasks" method="GET" enctype="multipart/form-data">
+          <div align="center" class="form-outline">
+              <button type="submit">SHOW TASKS</button>
+          </div>
+        </form>
+        <table align="center" border="1">
+            <tr>
+                <th>Task ID</th>
+                <th>Task Name</th>
+                <th>Task Description</th>
+                <th>Task Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td align="center"><strong>{{task.id}}</strong></td>
+                <td align="center"><b>{{task.name}}</b></td>
+                <td align="center">{{task.description}}</td>
+                <td align="center">{{task.status}}</td>
+                <td align="center">
+                    <form method="PUT">
+                        <label name="PUT">PUT</label>
+                        <a href="task/{{task.id}}">UPDATE</a>
+                        <a href="{{ url_for('update_task', task_id=task.id) }}">update_task</a>
+                    </form>
+                    <form method="PUT" action="{{ url_for('delete_task', task_id=task.id) }}" >
+                        <label name="DELETE">DELETE</label>
+                        <a href="task/{{task.id}}">DELETE</a>
+                        <a href="{{ url_for('delete_task', task_id=task.id) }}">delete_task</a>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+</body>
+</html>
